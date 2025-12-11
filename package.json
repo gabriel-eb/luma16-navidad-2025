@@ -1,0 +1,29 @@
+{
+  "name": "luma16-navidad-2025",
+  "version": "0.0.0",
+  "description": "santa secreto 2025",
+  "homepage": "https://gabriel-eb.github.io/luma16-navidad-2025/",
+  "bugs": {
+    "url": "https://github.com/gabriel-eb/luma16-navidad-2025/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gabriel-eb/luma16-navidad-2025.git"
+  },
+  "license": "MIT",
+  "author": "gabriel-eb",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "devDependencies": {
+    "vite": "^7.2.7",
+    "vite-plugin-glsl": "^1.5.5",
+    "vite-plugin-restart": "^2.0.0"
+  },
+  "dependencies": {
+    "lil-gui": "^0.21.0",
+    "three": "^0.182.0"
+  }
+}
