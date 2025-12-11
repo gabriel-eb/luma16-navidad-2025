@@ -5,6 +5,7 @@ import {
   MeshBasicMaterial,
   PerspectiveCamera,
   Scene,
+  SRGBColorSpace,
   TextureLoader,
   WebGLRenderer,
 } from "three";
@@ -36,9 +37,35 @@ gltfLoader.setDRACOLoader(dracoLoader);
 /**
  * Objects
  */
-const cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicMaterial());
+const xmasTextrue = textureLoader.load("navidad_bake.jpg");
+xmasTextrue.flipY = false;
+xmasTextrue.colorSpace = SRGBColorSpace;
 
-scene.add(cube);
+const xmasMaterial = new MeshBasicMaterial({ map: xmasTextrue });
+const yellowLightsMaterial = new MeshBasicMaterial({ color: 0xffeeaa });
+
+gltfLoader.load("navidad.glb", (gltf) => {
+  const children = gltf.scene.children;
+
+  gltf.scene.traverse((child) => (child.material = xmasMaterial));
+  children.map((child) => {
+    if (child.name.includes("luz")) {
+      child.material = yellowLightsMaterial;
+    }
+  });
+
+  // const bakedMesh = children.find(({ name }) => name === "baked");
+  // const lampLMesh = children.find(({ name }) => name === "bulb_l");
+  // const lampRMesh = children.find(({ name }) => name === "bulb_r");
+  // const portalMesh = children.find(({ name }) => name === "portal");
+
+  // bakedMesh.material = bakedMaterial;
+  // lampLMesh.material = poleLightMaterial;
+  // lampRMesh.material = poleLightMaterial;
+  // portalMesh.material = portalMaterial;
+
+  scene.add(gltf.scene);
+});
 
 // Size
 const sizes = {
@@ -75,13 +102,22 @@ const renderer = new WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor("#181818");
 
 /**
  * Debugging
  */
+
 const gui = new GUI({
   width: 400,
+  title: "Debug",
 });
+
+if (window.location.hash && window.location.hash.includes("debug")) {
+  gui.show(true);
+} else {
+  gui.show(false);
+}
 
 // Animations
 const clock = new Clock();
