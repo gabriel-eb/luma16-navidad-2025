@@ -1,4 +1,13 @@
-import { Clock, Mesh, PerspectiveCamera, Scene, TextureLoader, WebGLRenderer } from "three";
+import {
+  BoxGeometry,
+  Clock,
+  Mesh,
+  MeshBasicMaterial,
+  PerspectiveCamera,
+  Scene,
+  TextureLoader,
+  WebGLRenderer,
+} from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
@@ -27,10 +36,7 @@ gltfLoader.setDRACOLoader(dracoLoader);
 /**
  * Objects
  */
-const cube = new Mesh(
-  new BoxGeometry(1, 1, 1),
-  new MeshBasicMaterial()
-);
+const cube = new Mesh(new BoxGeometry(1, 1, 1), new MeshBasicMaterial());
 
 scene.add(cube);
 
@@ -52,12 +58,7 @@ window.addEventListener("resize", () => {
 });
 
 // Camera
-const camera = new PerspectiveCamera(
-  45,
-  sizes.width / sizes.height,
-  0.1,
-  100
-);
+const camera = new PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100);
 camera.position.x = 4;
 camera.position.y = 2;
 camera.position.z = 4;
