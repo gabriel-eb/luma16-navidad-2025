@@ -5,6 +5,8 @@ import {
   MeshBasicMaterial,
   PerspectiveCamera,
   Scene,
+  Sprite,
+  SpriteMaterial,
   SRGBColorSpace,
   TextureLoader,
   WebGLRenderer,
@@ -66,6 +68,21 @@ gltfLoader.load("navidad.glb", (gltf) => {
 
   scene.add(gltf.scene);
 });
+
+const regalo = new Mesh(
+  new BoxGeometry(0.4, 0.4, 0.4),
+  new MeshBasicMaterial({ color: 0x2244dd })
+);
+regalo.position.set(0.4, 0.2, 0.4);
+scene.add(regalo);
+
+const spriteMap = textureLoader.load("ribbon.png");
+spriteMap.colorSpace = SRGBColorSpace;
+const spriteMaterial = new SpriteMaterial({ map: spriteMap });
+const sprite = new Sprite(spriteMaterial);
+sprite.position.set(0.4, 0.5, 0.4);
+sprite.scale.set(0.5,0.5,0.5);
+scene.add(sprite);
 
 // Size
 const sizes = {
