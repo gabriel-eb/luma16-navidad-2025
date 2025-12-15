@@ -99,6 +99,24 @@ gltfLoader.load("navidad.glb", (gltf) => {
 // sprite.scale.set(0.5,0.5,0.5);
 // scene.add(sprite);
 
+// Santa
+const santaMap = textureLoader.load("santa.png");
+santaMap.colorSpace = SRGBColorSpace;
+const santaMaterial = new SpriteMaterial({ map: santaMap });
+const santa = new Sprite(santaMaterial);
+santa.position.set(0.2, 0.7, 0);
+santa.scale.set(1.4, 1.5, 1);
+scene.add(santa);
+
+// Elves
+const elvesMap = textureLoader.load("duendes.png");
+elvesMap.colorSpace = SRGBColorSpace;
+const elvesMaterial = new SpriteMaterial({ map: elvesMap });
+const elves = new Sprite(elvesMaterial);
+elves.position.set(0.7, 0.44, 0.4);
+elves.scale.set(1, 0.9, 1);
+scene.add(elves);
+
 // Size
 const sizes = {
   width: window.innerWidth,
