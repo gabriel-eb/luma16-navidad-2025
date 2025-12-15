@@ -1,8 +1,7 @@
 import {
-  BoxGeometry,
   Clock,
-  Mesh,
   MeshBasicMaterial,
+  MeshStandardMaterial,
   PerspectiveCamera,
   Scene,
   Sprite,
@@ -44,31 +43,45 @@ xmasTextrue.flipY = false;
 xmasTextrue.colorSpace = SRGBColorSpace;
 
 const xmasMaterial = new MeshBasicMaterial({ map: xmasTextrue });
-const yellowLightsMaterial = new MeshBasicMaterial({ color: 0xffeeaa });
+const yellowLightsMaterial = new MeshStandardMaterial({
+  emissive: 0xbeff13,
+  emissiveIntensity: 8.0,
+});
+const blueLightsMaterial = new MeshStandardMaterial({
+  emissive: 0x3c90ff,
+  emissiveIntensity: 8.0,
+});
+const violetLightsMaterial = new MeshStandardMaterial({
+  emissive: 0xe22eff,
+  emissiveIntensity: 8.0,
+});
 
 gltfLoader.load("navidad.glb", (gltf) => {
   const children = gltf.scene.children;
 
   gltf.scene.traverse((child) => (child.material = xmasMaterial));
-  children.map((child) => {
-    if (child.name.includes("luz")) {
-      child.material = yellowLightsMaterial;
-    }
-  });
-
-  // const bakedMesh = children.find(({ name }) => name === "baked");
-  // const lampLMesh = children.find(({ name }) => name === "bulb_l");
-  // const lampRMesh = children.find(({ name }) => name === "bulb_r");
+  const yellowLights = children.filter(({ name }) =>
+    name.includes("luz_amarilla")
+  );
+  const blueLights = children.filter(({ name }) => name.includes("luz_azul"));
+  const violetLights = children.filter(({ name }) =>
+    name.includes("luz_violeta")
+  );
   // const portalMesh = children.find(({ name }) => name === "portal");
 
-  // bakedMesh.material = bakedMaterial;
-  // lampLMesh.material = poleLightMaterial;
-  // lampRMesh.material = poleLightMaterial;
+  yellowLights.forEach((child) => {
+    child.material = yellowLightsMaterial;
+  });
+  blueLights.forEach((child) => {
+    child.material = blueLightsMaterial;
+  });
+  violetLights.forEach((child) => {
+    child.material = violetLightsMaterial;
+  });
   // portalMesh.material = portalMaterial;
 
   scene.add(gltf.scene);
 });
-
 
 // Test gift
 // const regalo = new Mesh(
