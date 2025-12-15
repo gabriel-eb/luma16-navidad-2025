@@ -152,7 +152,7 @@ const renderer = new WebGLRenderer({
 });
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.setClearColor("#181818");
+renderer.setClearColor("#242424");
 
 /**
  * Debugging

@@ -12,9 +12,27 @@
       href="https://fonts.googleapis.com/css2?family=Berkshire+Swash&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@40,400,0,0&icon_names=visibility,visibility_off"
+    />
   </head>
   <body>
-    <h1>¡Feliz Navidad y prospero año nuevo!</h1>
+    <input type="checkbox" name="titleDisplay" id="titleDisplay" />
+    <input type="checkbox" name="snowDisplay" id="snowDisplay" />
+    <menu class="main-menu">
+      <li>
+        <label for="titleDisplay">
+          <span class="material-symbols-outlined"></span> Mensaje
+        </label>
+      </li>
+      <li>
+        <label for="snowDisplay">
+          <span class="material-symbols-outlined"></span> Nieve
+        </label>
+      </li>
+    </menu>
+    <h1 class="title">¡Feliz Navidad y prospero año nuevo!</h1>
     <canvas class="webgl"></canvas>
     <script type="module" src="./script.js"></script>
   </body>
