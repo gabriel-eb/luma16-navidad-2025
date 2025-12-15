@@ -1,5 +1,7 @@
 import {
   Clock,
+  ConeGeometry,
+  Mesh,
   MeshBasicMaterial,
   MeshStandardMaterial,
   PerspectiveCamera,
@@ -46,14 +48,23 @@ const xmasMaterial = new MeshBasicMaterial({ map: xmasTextrue });
 const yellowLightsMaterial = new MeshStandardMaterial({
   emissive: 0xbeff13,
   emissiveIntensity: 8.0,
+  color: 0xbeff13,
+  transparent: true,
+  opacity: 0.5,
 });
 const blueLightsMaterial = new MeshStandardMaterial({
   emissive: 0x3c90ff,
   emissiveIntensity: 8.0,
+  color: 0x3c90ff,
+  transparent: true,
+  opacity: 0.5,
 });
 const violetLightsMaterial = new MeshStandardMaterial({
   emissive: 0xe22eff,
   emissiveIntensity: 8.0,
+  color: 0xe22eff,
+  transparent: true,
+  opacity: 0.5,
 });
 
 gltfLoader.load("navidad.glb", (gltf) => {
@@ -114,8 +125,17 @@ elvesMap.colorSpace = SRGBColorSpace;
 const elvesMaterial = new SpriteMaterial({ map: elvesMap });
 const elves = new Sprite(elvesMaterial);
 elves.position.set(0.7, 0.44, 0.4);
-elves.scale.set(1, 0.9, 1);
+elves.scale.set(1, 0.8, 1);
 scene.add(elves);
+
+// Lighthouse light
+const height = 0.8;
+const fakeLightGeo = new ConeGeometry(0.1, height, 8);
+fakeLightGeo.translate(0, -height * 0.5, 0); // Translate origin to tip
+const fakeLight = new Mesh(fakeLightGeo, yellowLightsMaterial);
+fakeLight.position.set(1.65, 0.95, -1.56);
+fakeLight.rotateX(Math.PI * 0.5);
+scene.add(fakeLight);
 
 // Size
 const sizes = {
@@ -176,6 +196,7 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   // Update objects movement
+  fakeLight.rotation.z = Math.PI * 0.2 * elapsedTime;
 
   // Update controls
   controls.update();
