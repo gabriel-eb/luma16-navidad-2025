@@ -23,9 +23,8 @@ import GUI from "lil-gui";
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
-
-// Snow checkbox
 const snowDisplay = document.querySelector("#snowDisplay");
+const lighthouseDisplay = document.querySelector("#lighthouseDisplay");
 
 // Scene
 const scene = new Scene();
@@ -125,6 +124,21 @@ fakeLightGeo.translate(0, -coneHeight * 0.5, 0); // Translate origin to tip
 const fakeLight = new Mesh(fakeLightGeo, yellowLightsMaterial);
 fakeLight.position.set(1.65, 0.95, -1.56);
 fakeLight.rotateX(Math.PI * 0.5);
+
+const ogAnimateLighthouse = (elapsedTime) =>
+  (fakeLight.rotation.z = Math.PI * 0.2 * elapsedTime);
+let animateLighthouse = ogAnimateLighthouse;
+
+lighthouseDisplay.addEventListener("change", (e) => {
+  if (lighthouseDisplay.checked) {
+    scene.remove(fakeLight);
+    animateLighthouse = (elapsedTime) => {};
+  } else {
+    scene.add(fakeLight);
+    animateLighthouse = ogAnimateLighthouse;
+  }
+});
+
 scene.add(fakeLight);
 
 // Snow
@@ -151,7 +165,8 @@ const snow = new Points(snowGeometry, snowMaterial);
 
 const ogAnimateSnow = () => {
   for (let i = 0; i < numberOfParticles; i++) {
-    snowGeometry.attributes.position.array[i * 3 + 1] -= Math.random() * (Math.random() * 0.09);
+    snowGeometry.attributes.position.array[i * 3 + 1] -=
+      Math.random() * (Math.random() * 0.09);
     if (snowGeometry.attributes.position.array[i * 3 + 1] < 0) {
       snowGeometry.attributes.position.array[i * 3 + 1] = 5;
     }
@@ -163,14 +178,14 @@ let animateSnow = ogAnimateSnow;
 
 // check snow display
 snowDisplay.addEventListener("change", (e) => {
-  if(snowDisplay.checked) {
+  if (snowDisplay.checked) {
     scene.remove(snow);
     animateSnow = () => {};
   } else {
     scene.add(snow);
     animateSnow = ogAnimateSnow;
   }
-})
+});
 
 scene.add(snow);
 
@@ -233,7 +248,7 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
 
   // Update objects movement
-  fakeLight.rotation.z = Math.PI * 0.2 * elapsedTime;
+  animateLighthouse(elapsedTime);
   animateSnow();
 
   // Update controls

@@ -36,9 +36,8 @@ body {
 .main-menu {
   color: white;
   /* font-weight: 600; */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto auto;
   list-style-type: none;
   width: fit-content;
   gap: 1rem;
@@ -53,6 +52,8 @@ label {
 
 /* Add focus to label */
 #titleDisplay:focus ~ menu label[for="titleDisplay"],
+#lighthouseDisplay:focus ~ menu label[for="lighthouseDisplay"],
+#musicPlay:focus ~ menu label[for="musicPlay"],
 #snowDisplay:focus ~ menu label[for="snowDisplay"] {
   outline: 1px solid white;
   border-radius: 1px;
@@ -60,8 +61,11 @@ label {
 }
 
 /* Set initial icon to label*/
-.material-symbols-outlined::after {
+.material-symbols-outlined.eye::after {
   content: 'visibility';
+}
+.material-symbols-outlined.music::after {
+  content: 'music_note';
 }
 
 /* Make title disapear using checkbox */
@@ -71,6 +75,8 @@ label {
 
 /* Add decoration to label when checked */
 #titleDisplay:checked ~ menu label[for="titleDisplay"],
+#lighthouseDisplay:checked ~ menu label[for="lighthouseDisplay"],
+#musicPlay:checked ~ menu label[for="musicPlay"],
 #snowDisplay:checked ~ menu label[for="snowDisplay"] {
   text-decoration: line-through;
   opacity: 0.5;
@@ -78,8 +84,13 @@ label {
 
 /* change icon when checked */
 #titleDisplay:checked ~ menu label[for="titleDisplay"] .material-symbols-outlined::after,
+#lighthouseDisplay:checked ~ menu label[for="lighthouseDisplay"] .material-symbols-outlined::after,
 #snowDisplay:checked ~ menu label[for="snowDisplay"] .material-symbols-outlined::after {
   content: 'visibility_off';
+}
+
+#musicPlay:checked ~ menu label[for="musicPlay"] .material-symbols-outlined::after {
+  content: 'music_off';
 }
 
 /* Hide checkbox */
