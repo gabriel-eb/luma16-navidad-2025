@@ -9,6 +9,41 @@ body {
   overflow: hidden;
 }
 
+.overlay {
+  z-index: 1;
+  position: relative;
+  background-color: #242424;
+  width: 100vw;
+  height: 100vh;
+  transition: opacity 0.5s ease;
+}
+
+.start {
+  font-family: "Berkshire Swash", serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  outline: none;
+  background-color: transparent;
+  border: 4px solid #1a4700;
+  border-radius: 1rem;
+  color: #e01010;
+  padding: 2rem;
+  cursor: pointer;
+  box-shadow: 0 0 2.5rem 2.5rem #1a4700 inset, 0 0 0 0 #1a4700;
+  transition: all 150ms ease-in-out;
+}
+
+.start:hover {
+  box-shadow: 0 0 10px 0 #1a4700 inset, 0 0 10px 4px #1a4700;
+}
+
+.start:active {
+  background: #800808;
+}
+
 .webgl {
   position: fixed;
   top: 0;
@@ -70,10 +105,10 @@ input[type="checkbox"] {
 
 /* Set initial icon to label*/
 .material-symbols-outlined.eye::after {
-  content: 'visibility';
+  content: "visibility";
 }
 .material-symbols-outlined.music::after {
-  content: 'music_note';
+  content: "music_note";
 }
 
 /* Add focus to label */
@@ -96,11 +131,23 @@ input[type="checkbox"] {
 }
 
 /* change icon when checked */
-#titleDisplay:checked ~ menu label[for="titleDisplay"] .material-symbols-outlined::after,
-#lighthouseDisplay:checked ~ menu label[for="lighthouseDisplay"] .material-symbols-outlined::after,
-#snowDisplay:checked ~ menu label[for="snowDisplay"] .material-symbols-outlined::after {
-  content: 'visibility_off';
+#titleDisplay:checked
+  ~ menu
+  label[for="titleDisplay"]
+  .material-symbols-outlined::after,
+#lighthouseDisplay:checked
+  ~ menu
+  label[for="lighthouseDisplay"]
+  .material-symbols-outlined::after,
+#snowDisplay:checked
+  ~ menu
+  label[for="snowDisplay"]
+  .material-symbols-outlined::after {
+  content: "visibility_off";
 }
-#musicPlay:checked ~ menu label[for="musicPlay"] .material-symbols-outlined::after {
-  content: 'music_off';
+#musicPlay:checked
+  ~ menu
+  label[for="musicPlay"]
+  .material-symbols-outlined::after {
+  content: "music_off";
 }
