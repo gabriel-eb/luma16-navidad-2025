@@ -44,6 +44,21 @@ body {
   background: #800808;
 }
 
+.gh-icon {
+  height: 52px;
+  width: 52px;
+  display: block;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  opacity: 0.6;
+  border-radius: 50%;
+}
+
+.gh-icon:hover {
+  box-shadow: 0 0 8px 4px #fff;
+}
+
 .webgl {
   position: fixed;
   top: 0;
