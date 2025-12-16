@@ -23,8 +23,8 @@ import GUI from "lil-gui";
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
-const snowDisplay = document.querySelector("#snowDisplay");
-const lighthouseDisplay = document.querySelector("#lighthouseDisplay");
+const snowDisplay = document.getElementById("snowDisplay");
+const lighthouseDisplay = document.getElementById("lighthouseDisplay");
 
 // Scene
 const scene = new Scene();
