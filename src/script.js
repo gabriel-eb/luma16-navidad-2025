@@ -1,10 +1,14 @@
 import {
+  BufferAttribute,
+  BufferGeometry,
   Clock,
   ConeGeometry,
   Mesh,
   MeshBasicMaterial,
   MeshStandardMaterial,
   PerspectiveCamera,
+  Points,
+  PointsMaterial,
   Scene,
   Sprite,
   SpriteMaterial,
@@ -19,6 +23,9 @@ import GUI from "lil-gui";
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
+
+// Snow checkbox
+const snowDisplay = document.querySelector("#snowDisplay");
 
 // Scene
 const scene = new Scene();
@@ -43,8 +50,8 @@ gltfLoader.setDRACOLoader(dracoLoader);
 const xmasTextrue = textureLoader.load("navidad_bake.jpg");
 xmasTextrue.flipY = false;
 xmasTextrue.colorSpace = SRGBColorSpace;
-
 const xmasMaterial = new MeshBasicMaterial({ map: xmasTextrue });
+
 const yellowLightsMaterial = new MeshStandardMaterial({
   emissive: 0xbeff13,
   emissiveIntensity: 8.0,
@@ -71,6 +78,7 @@ gltfLoader.load("navidad.glb", (gltf) => {
   const children = gltf.scene.children;
 
   gltf.scene.traverse((child) => (child.material = xmasMaterial));
+
   const yellowLights = children.filter(({ name }) =>
     name.includes("luz_amarilla")
   );
@@ -78,7 +86,6 @@ gltfLoader.load("navidad.glb", (gltf) => {
   const violetLights = children.filter(({ name }) =>
     name.includes("luz_violeta")
   );
-  // const portalMesh = children.find(({ name }) => name === "portal");
 
   yellowLights.forEach((child) => {
     child.material = yellowLightsMaterial;
@@ -89,26 +96,9 @@ gltfLoader.load("navidad.glb", (gltf) => {
   violetLights.forEach((child) => {
     child.material = violetLightsMaterial;
   });
-  // portalMesh.material = portalMaterial;
 
   scene.add(gltf.scene);
 });
-
-// Test gift
-// const regalo = new Mesh(
-//   new BoxGeometry(0.4, 0.4, 0.4),
-//   new MeshBasicMaterial({ color: 0x2244dd })
-// );
-// regalo.position.set(0.4, 0.2, 0.4);
-// scene.add(regalo);
-
-// const spriteMap = textureLoader.load("ribbon.png");
-// spriteMap.colorSpace = SRGBColorSpace;
-// const spriteMaterial = new SpriteMaterial({ map: spriteMap });
-// const sprite = new Sprite(spriteMaterial);
-// sprite.position.set(0.4, 0.5, 0.4);
-// sprite.scale.set(0.5,0.5,0.5);
-// scene.add(sprite);
 
 // Santa
 const santaMap = textureLoader.load("santa.png");
@@ -129,13 +119,60 @@ elves.scale.set(1, 0.8, 1);
 scene.add(elves);
 
 // Lighthouse light
-const height = 0.8;
-const fakeLightGeo = new ConeGeometry(0.1, height, 8);
-fakeLightGeo.translate(0, -height * 0.5, 0); // Translate origin to tip
+const coneHeight = 0.8;
+const fakeLightGeo = new ConeGeometry(0.1, coneHeight, 8);
+fakeLightGeo.translate(0, -coneHeight * 0.5, 0); // Translate origin to tip
 const fakeLight = new Mesh(fakeLightGeo, yellowLightsMaterial);
 fakeLight.position.set(1.65, 0.95, -1.56);
 fakeLight.rotateX(Math.PI * 0.5);
 scene.add(fakeLight);
+
+// Snow
+const snowTexture = textureLoader.load("1.png");
+const snowGeometry = new BufferGeometry();
+const numberOfParticles = 250;
+const positions = new Float32Array(numberOfParticles * 3);
+for (let i = 0; i < positions.length; i += 3) {
+  positions[i] = (Math.random() - 0.5) * 8;
+  positions[i + 1] = (Math.random() - 0.5) * 8;
+  positions[i + 2] = (Math.random() - 0.5) * 8;
+}
+snowGeometry.setAttribute("position", new BufferAttribute(positions, 3));
+
+const snowMaterial = new PointsMaterial({
+  size: 0.2,
+  sizeAttenuation: true,
+  transparent: true,
+  alphaMap: snowTexture,
+  alphaTest: 0.2,
+});
+
+const snow = new Points(snowGeometry, snowMaterial);
+
+const ogAnimateSnow = () => {
+  for (let i = 0; i < numberOfParticles; i++) {
+    snowGeometry.attributes.position.array[i * 3 + 1] -= Math.random() * (Math.random() * 0.09);
+    if (snowGeometry.attributes.position.array[i * 3 + 1] < 0) {
+      snowGeometry.attributes.position.array[i * 3 + 1] = 5;
+    }
+  }
+  snowGeometry.attributes.position.needsUpdate = true;
+};
+
+let animateSnow = ogAnimateSnow;
+
+// check snow display
+snowDisplay.addEventListener("change", (e) => {
+  if(snowDisplay.checked) {
+    scene.remove(snow);
+    animateSnow = () => {};
+  } else {
+    scene.add(snow);
+    animateSnow = ogAnimateSnow;
+  }
+})
+
+scene.add(snow);
 
 // Size
 const sizes = {
@@ -197,6 +234,7 @@ const tick = () => {
 
   // Update objects movement
   fakeLight.rotation.z = Math.PI * 0.2 * elapsedTime;
+  animateSnow();
 
   // Update controls
   controls.update();
