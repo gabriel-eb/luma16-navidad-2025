@@ -7,6 +7,7 @@ import {
   MeshBasicMaterial,
   MeshStandardMaterial,
   PerspectiveCamera,
+  PlaneGeometry,
   Points,
   PointsMaterial,
   Scene,
@@ -140,6 +141,16 @@ lighthouseDisplay.addEventListener("change", (e) => {
 });
 
 scene.add(fakeLight);
+
+// LUMA16
+const luma16texture = textureLoader.load("luma16.png");
+luma16texture.colorSpace = SRGBColorSpace;
+const luma16 = new Mesh(
+  new PlaneGeometry(4, 1),
+  new MeshBasicMaterial({ map: luma16texture, transparent: true })
+);
+luma16.position.set(0, 0.5, -2.5);
+scene.add(luma16);
 
 // Snow
 const snowTexture = textureLoader.load("1.png");
