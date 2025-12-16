@@ -109,12 +109,21 @@ santa.position.set(0.2, 0.7, 0);
 santa.scale.set(1.4, 1.5, 1);
 scene.add(santa);
 
+// Grinch
+const grinchMap = textureLoader.load("grinch.png");
+grinchMap.colorSpace = SRGBColorSpace;
+const grinchMaterial = new SpriteMaterial({ map: grinchMap });
+const grinch = new Sprite(grinchMaterial);
+grinch.position.set(-0.5, 0.5, -1);
+grinch.scale.set(0.8, 1);
+scene.add(grinch);
+
 // Elves
 const elvesMap = textureLoader.load("duendes.png");
 elvesMap.colorSpace = SRGBColorSpace;
 const elvesMaterial = new SpriteMaterial({ map: elvesMap });
 const elves = new Sprite(elvesMaterial);
-elves.position.set(0.7, 0.44, 0.4);
+elves.position.set(0.7, 0.4, 0.4);
 elves.scale.set(1, 0.8, 1);
 scene.add(elves);
 
