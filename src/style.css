@@ -36,6 +36,12 @@ body {
   transition: all 150ms ease-in-out;
 }
 
+.start:disabled {
+  color: #b9b9b9;
+  box-shadow: 0 0 0 0 #b9b9b9 inset, 0 0 0 0 #b9b9b9;
+  border: 4px solid #b9b9b9;
+}
+
 .start:hover {
   box-shadow: 0 0 10px 0 #1a4700 inset, 0 0 10px 4px #1a4700;
 }

@@ -3,6 +3,13 @@ const startButton = document.querySelector("button.start");
 const music = document.getElementById("music");
 const musicPlay = document.getElementById("musicPlay");
 
+startButton.disabled = true;
+
+setTimeout(() => {
+  startButton.innerHTML = "COMENZAR";
+  startButton.disabled = false;
+}, 3000);
+
 startButton.addEventListener(
   "click",
   () => {
@@ -14,9 +21,9 @@ startButton.addEventListener(
 );
 
 musicPlay.addEventListener("change", () => {
-    if(musicPlay.checked) {
-        music.pause();
-    } else {
-        music.play();
-    }
-})
+  if (musicPlay.checked) {
+    music.pause();
+  } else {
+    music.play();
+  }
+});
