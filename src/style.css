@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 html,
@@ -8,9 +9,166 @@ body {
   overflow: hidden;
 }
 
+.overlay {
+  z-index: 1;
+  position: relative;
+  background-color: #242424;
+  width: 100vw;
+  height: 100vh;
+  transition: opacity 0.5s ease;
+}
+
+.start {
+  font-family: "Berkshire Swash", serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3rem;
+  outline: none;
+  background-color: transparent;
+  border: 4px solid #1a4700;
+  border-radius: 1rem;
+  color: #e01010;
+  padding: 2rem;
+  cursor: pointer;
+  box-shadow: 0 0 2.5rem 2.5rem #1a4700 inset, 0 0 0 0 #1a4700;
+  transition: all 150ms ease-in-out;
+}
+
+.start:disabled {
+  color: #b9b9b9;
+  box-shadow: 0 0 0 0 #b9b9b9 inset, 0 0 0 0 #b9b9b9;
+  border: 4px solid #b9b9b9;
+}
+
+.start:hover {
+  box-shadow: 0 0 10px 0 #1a4700 inset, 0 0 10px 4px #1a4700;
+}
+
+.start:active {
+  background: #800808;
+}
+
+.gh-icon {
+  height: 52px;
+  width: 52px;
+  display: block;
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  opacity: 0.6;
+  border-radius: 50%;
+}
+
+.gh-icon:hover {
+  box-shadow: 0 0 8px 4px #fff;
+}
+
 .webgl {
   position: fixed;
   top: 0;
   left: 0;
   outline: none;
+  z-index: -1;
+}
+
+.title {
+  font-family: "Berkshire Swash", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: clamp(1rem, -0.875rem + 8.333333vw, 4rem);
+  color: white;
+  opacity: 0.7;
+  text-align: center;
+  position: absolute;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
+.main-menu {
+  color: white;
+  display: grid;
+  grid-template-columns: auto auto;
+  list-style-type: none;
+  width: fit-content;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Hide checkbox */
+input[type="checkbox"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Make title disapear using checkbox */
+#titleDisplay:checked ~ .title {
+  opacity: 0;
+}
+
+/* Set initial icon to label*/
+.material-symbols-outlined.eye::after {
+  content: "visibility";
+}
+.material-symbols-outlined.music::after {
+  content: "music_note";
+}
+
+/* Add focus to label */
+#titleDisplay:focus ~ menu label[for="titleDisplay"],
+#lighthouseDisplay:focus ~ menu label[for="lighthouseDisplay"],
+#musicPlay:focus ~ menu label[for="musicPlay"],
+#snowDisplay:focus ~ menu label[for="snowDisplay"] {
+  outline: 1px solid white;
+  border-radius: 1px;
+  outline-offset: 4px;
+}
+
+/* Add decoration to label when checked */
+#titleDisplay:checked ~ menu label[for="titleDisplay"],
+#lighthouseDisplay:checked ~ menu label[for="lighthouseDisplay"],
+#musicPlay:checked ~ menu label[for="musicPlay"],
+#snowDisplay:checked ~ menu label[for="snowDisplay"] {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* change icon when checked */
+#titleDisplay:checked
+  ~ menu
+  label[for="titleDisplay"]
+  .material-symbols-outlined::after,
+#lighthouseDisplay:checked
+  ~ menu
+  label[for="lighthouseDisplay"]
+  .material-symbols-outlined::after,
+#snowDisplay:checked
+  ~ menu
+  label[for="snowDisplay"]
+  .material-symbols-outlined::after {
+  content: "visibility_off";
+}
+#musicPlay:checked
+  ~ menu
+  label[for="musicPlay"]
+  .material-symbols-outlined::after {
+  content: "music_off";
 }
